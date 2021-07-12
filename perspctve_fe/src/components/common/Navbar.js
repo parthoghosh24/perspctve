@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import {FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faCompass, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import {faCompass, faInfoCircle, faHome } from '@fortawesome/free-solid-svg-icons'
 
 
 const Navbar = ({ toggle, isOpen }) => {
@@ -19,13 +19,18 @@ const Navbar = ({ toggle, isOpen }) => {
         </Link>
       </div>
       <div className="mt-7 items-center text-blue-700 p-1 text-xl hover:bg-blue-700 hover:text-white">
-      <Link to ="/">
-        <FontAwesomeIcon icon={faCompass}/> <span>Explore</span> 
-      </Link>
+        <Link to ="/">
+          <FontAwesomeIcon icon={faHome}/> <span>Home</span> 
+        </Link>
       </div>
       <div className="mt-3 items-center text-blue-700 p-1 text-xl hover:bg-blue-700 hover:text-white">
-        <Link to ="/" >
-        <FontAwesomeIcon icon={faInfoCircle}/> <span>About</span>
+        <Link to ="/explore">
+          <FontAwesomeIcon icon={faCompass}/> <span>Explore</span> 
+        </Link>
+      </div>
+      <div className="mt-3 items-center text-blue-700 p-1 text-xl hover:bg-blue-700 hover:text-white">
+        <Link to ="/about" >
+          <FontAwesomeIcon icon={faInfoCircle}/> <span>About</span>
         </Link>
       </div>
       <div className="fixed w-full bottom-0 flex pl-1 items-center text-blue-700 text-lg">
