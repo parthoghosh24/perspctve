@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  @variants responsive{
+    .triangle-top-white-0{
+        width: 0; 
+        height: 0; 
+        border-left: 0.125rem solid transparent;
+        border-right: 0.125rem solid transparent;
+        border-bottom: 0.125rem solid white;
+    }
+  }
+}

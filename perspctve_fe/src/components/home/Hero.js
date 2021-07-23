@@ -6,7 +6,7 @@ import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
 const Hero = () => {
   return (
     <div className="flex flex-col w-full justify-center items-center">
-      <h1 className="text-6xl lg:text-8xl mb-20 text-white">
+      <h1 className="text-6xl lg:text-8xl mb-20 text-white font-extrabold">
         Perspctve
       </h1>
       <p className="lg:text-4xl md:text-2xl sm:text-2xl text-white">

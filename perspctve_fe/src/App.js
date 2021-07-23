@@ -4,6 +4,7 @@ import './App.css';
 import Home from './pages/home'
 import About from './pages/about'
 import Explore from './pages/explore'
+import PostNew from './pages/postNew'
 import Navbar from './components/common/Navbar';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Navbar toggle={toggle} isOpen = {isOpen}/>
       <Switch>
         <Route path="/" exact component={Home} />
+        <Route path="/posts/new" exact component={PostNew} />
         <Route path="/about" exact component={About} />
         <Route path="/explore" exact component={Explore} />
       </Switch>
