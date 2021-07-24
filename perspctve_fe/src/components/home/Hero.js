@@ -15,7 +15,7 @@ const Hero = () => {
       <p className="lg:text-4xl md:text-2xl text-white">
         Discover what the world thinks.
       </p>
-      <Link className="mt-10 py-4 px-6 bg-gray-50 ring-2 rounded-sm text-1xl md:text-2xl text-blue-800 hover:bg-blue-700 hover:text-gray-50" to="/">Sign in using <FontAwesomeIcon icon={ faLinkedin } /></Link>
+      <Link className="mt-10 py-4 px-6 bg-gray-50 ring-2 rounded-sm text-1xl md:text-2xl text-blue-800 hover:bg-blue-700 hover:text-gray-50" to="/profile">Sign in using <FontAwesomeIcon icon={ faLinkedin } /></Link>
     </div>
   )
 }

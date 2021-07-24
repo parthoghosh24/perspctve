@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import {FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faCompass, faInfoCircle, faHome, faPenNib, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import {faCompass, faInfoCircle, faPenNib, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 
 const Navbar = ({ toggle, isOpen }) => {
