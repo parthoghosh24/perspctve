@@ -162,7 +162,8 @@ CREATE TABLE public.users (
     username character varying,
     avatar character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    uuid character varying
 );
 
 
@@ -332,6 +333,13 @@ CREATE INDEX index_users_on_username ON public.users USING btree (username);
 
 
 --
+-- Name: index_users_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_uuid ON public.users USING btree (uuid);
+
+
+--
 -- Name: opinions fk_rails_18b743a5dd; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -368,6 +376,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210725043641'),
 ('20210725044923'),
 ('20210725153141'),
-('20210725154008');
+('20210725154008'),
+('20210803061419');
 
 

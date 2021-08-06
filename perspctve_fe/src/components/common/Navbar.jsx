@@ -11,9 +11,13 @@ const Navbar = ({ toggle, isOpen }) => {
       <Link to="/" className="pl-8 text-white font-extrabold text-2xl lg:text-3xl">Perspctve</Link>
       <div className="pr-8 inset-0 right-0">
         <div className="float-left">
-        <Link to="/posts/new" className="text-gray-50 text-xl mr-4 lg:text-2xl md:mr-1 hover:text-blue-600">
+        {
+          localStorage.length > 0 ?
+          <Link to="/posts/new" className="text-gray-50 text-xl mr-4 lg:text-2xl md:mr-1 hover:text-blue-600">
             <FontAwesomeIcon icon={faPenNib}/>
-        </Link>
+        </Link> : ''
+        }  
+        
         </div>
         <div className="float-left">
         <Link to ="#"  onClick={toggle}>

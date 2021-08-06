@@ -6,8 +6,8 @@ const Profile = () => {
   return (
     <div className="flex flex-col justify-between items-center bg-white lg:rounded-lg pt-10  max-w-full md:max-w-3xl lg:mt-10 pb-10 px-5">
       <div className="pb-5">
-          <img src={'images/author.jpeg'} className="rounded-full w-20 ring-4 ml-10" alt="author"/>
-          <span className="font-semibold text-2xl text-blue-800">Partho Ghosh</span>
+          <img src={localStorage.getItem('avatar')} className="rounded-full w-20 ring-4 ml-10" alt="author"/>
+          <span className="font-semibold text-2xl text-blue-800">{`${localStorage.getItem('first_name')} ${localStorage.getItem('last_name')}`}</span>
       </div>
       <div className="grid grid-cols-2 gap-24 lg:gap-32">
         <div className="text-xl lg:text-2xl">
