@@ -8,21 +8,32 @@ RSpec.describe "Api::V1::Opinions", type: :request do
     end
   end
 
-  describe "GET /new" do
+  describe "POST /create" do
+    let(:user) { User.create(first_name: 'First',
+                             last_name: 'Last',
+                             email: 'author@mail.com',
+                             username: 'author')}
+    
+    let(:opinion) { {
+      title: 'Some Title',
+      body: 'Some body',
+      media: {type: 'image', url: 'http://www.google.com'},
+      tags: ['foo', 'bar'],
+      is_anonymous: false
+    } }
+    before do
+      user
+      allow_any_instance_of(ApplicationController).to receive(:authenticate_user!).and_return(true)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    end
+    
     it "returns http success" do
-      get "/api/v1/opinions/new"
+      post "/api/v1/opinions", params: {opinion: opinion}
       expect(response).to have_http_status(:success)
     end
   end
 
-  describe "GET /create" do
-    it "returns http success" do
-      get "/api/v1/opinions/create"
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe "GET /update" do
+  describe "PUT /update" do
     it "returns http success" do
       get "/api/v1/opinions/update"
       expect(response).to have_http_status(:success)

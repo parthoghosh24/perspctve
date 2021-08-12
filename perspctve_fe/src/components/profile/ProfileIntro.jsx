@@ -2,7 +2,7 @@ import { faPenNib,faHeart,faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
-const Profile = () => {
+const ProfileIntro = () => {
   return (
     <div className="flex flex-col justify-between items-center bg-white lg:rounded-lg pt-10  max-w-full md:max-w-3xl lg:mt-10 pb-10 px-5">
       <div className="pb-5">
@@ -36,4 +36,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default ProfileIntro

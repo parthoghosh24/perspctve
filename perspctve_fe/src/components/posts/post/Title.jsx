@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Title = () => {
+const Title = (props) => {
   return (
     <div>
       <h1 className="pt-4 px-1 text-2xl md:text-4xl font-bold mb-10 text-blue-800">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        {props.title}
       </h1>
     </div>
   )

@@ -10,6 +10,17 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: mode_types; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.mode_types AS ENUM (
+    'published',
+    'draft',
+    'blocked'
+);
+
+
+--
 -- Name: reaction_types; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -39,6 +50,38 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: opinion_tags; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.opinion_tags (
+    id bigint NOT NULL,
+    opinion_id bigint NOT NULL,
+    tag_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: opinion_tags_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.opinion_tags_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: opinion_tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.opinion_tags_id_seq OWNED BY public.opinion_tags.id;
+
+
+--
 -- Name: opinions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -50,9 +93,11 @@ CREATE TABLE public.opinions (
     user_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    in_support_id integer,
-    oppose_to_id integer,
-    uuid character varying
+    uuid character varying,
+    is_anonymous boolean,
+    mode public.mode_types,
+    in_support_of character varying,
+    in_oppostion_to character varying
 );
 
 
@@ -187,6 +232,13 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: opinion_tags id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.opinion_tags ALTER COLUMN id SET DEFAULT nextval('public.opinion_tags_id_seq'::regclass);
+
+
+--
 -- Name: opinions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -220,6 +272,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: opinion_tags opinion_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.opinion_tags
+    ADD CONSTRAINT opinion_tags_pkey PRIMARY KEY (id);
 
 
 --
@@ -263,17 +323,45 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: index_opinions_on_in_support_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_opinion_tags_on_opinion_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_opinions_on_in_support_id ON public.opinions USING btree (in_support_id);
+CREATE INDEX index_opinion_tags_on_opinion_id ON public.opinion_tags USING btree (opinion_id);
 
 
 --
--- Name: index_opinions_on_oppose_to_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_opinion_tags_on_tag_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_opinions_on_oppose_to_id ON public.opinions USING btree (oppose_to_id);
+CREATE INDEX index_opinion_tags_on_tag_id ON public.opinion_tags USING btree (tag_id);
+
+
+--
+-- Name: index_opinions_on_in_oppostion_to; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_opinions_on_in_oppostion_to ON public.opinions USING btree (in_oppostion_to);
+
+
+--
+-- Name: index_opinions_on_in_support_of; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_opinions_on_in_support_of ON public.opinions USING btree (in_support_of);
+
+
+--
+-- Name: index_opinions_on_is_anonymous; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_opinions_on_is_anonymous ON public.opinions USING btree (is_anonymous);
+
+
+--
+-- Name: index_opinions_on_mode; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_opinions_on_mode ON public.opinions USING btree (mode);
 
 
 --
@@ -356,6 +444,22 @@ ALTER TABLE ONLY public.reactions
 
 
 --
+-- Name: opinion_tags fk_rails_3a16286c96; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.opinion_tags
+    ADD CONSTRAINT fk_rails_3a16286c96 FOREIGN KEY (tag_id) REFERENCES public.tags(id);
+
+
+--
+-- Name: opinion_tags fk_rails_60c75af16d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.opinion_tags
+    ADD CONSTRAINT fk_rails_60c75af16d FOREIGN KEY (opinion_id) REFERENCES public.opinions(id);
+
+
+--
 -- Name: reactions fk_rails_9f02fc96a0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -377,6 +481,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210725044923'),
 ('20210725153141'),
 ('20210725154008'),
-('20210803061419');
+('20210803061419'),
+('20210808053001'),
+('20210809034731'),
+('20210809151603'),
+('20210810183006');
 
 

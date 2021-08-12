@@ -1,16 +1,20 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import GoogleLogin from 'react-google-login'
 import {fetchToken } from '../../apis/authService'
 import { useHistory } from 'react-router';
 import Loading from '../common/Loading';
+import UserContext from '../contexts/UserContext';
+import ErrorContext from '../contexts/ErrorContext';
 
 
 
 const Hero = () => {
 
-  const [showGoogleButton, setShowGoogleButton] = useState(true)
+  const [showGoogleButton, setShowGoogleButton] = useState(true);
+  const {setUser} = useContext(UserContext);
+  const {setError} = useContext(ErrorContext);
 
   const history = useHistory()
 
@@ -18,19 +22,28 @@ const Hero = () => {
     setShowGoogleButton(false);
     fetchToken(googleData.tokenId).then((resp)=>{
       // store user info in local store
+      let localUser = {}
       localStorage.setItem('token', resp.headers['x-auth-token'])
-      localStorage.setItem('email', resp.data.email)
+      localStorage.setItem('username', resp.data.username)
       localStorage.setItem('first_name', resp.data.first_name)
       localStorage.setItem('last_name', resp.data.last_name)
       localStorage.setItem('avatar', resp.data.avatar)
       // set context
+      localUser.first_name = resp.data.first_name
+      localUser.last_name = resp.data.last_name
+      localUser.username = resp.data.username
+      localUser.avatar = resp.data.avatar
+      setUser(localUser)
       // redirect to profile page
       history.replace("/profile")
+    }).catch((error)=>{
+      setError({message: 'Something went wrong! Please try again.'})
     });
   }
 
   const handleFailure = async(googleData) =>{
     setShowGoogleButton(true);
+    setError({message: 'Unable to login via google. If you are in incognito in chrome, turn off \'Block third-party cookies\''});
   }
 
   return (
