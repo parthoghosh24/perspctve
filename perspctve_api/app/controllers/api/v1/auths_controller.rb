@@ -13,7 +13,7 @@ class Api::V1::AuthsController < ApplicationController
       user.update(uuid: SecureRandom.uuid)
       token = JsonWebToken.encode({ uuid: user.uuid })
       response.set_header('X-AUTH-TOKEN', token)
-      render json: user, status: :ok
+      render json: UserBlueprint.render(user) , status: :ok
     rescue StandardError => e
       render json: { error: e }, status: :internal_server_error
     end

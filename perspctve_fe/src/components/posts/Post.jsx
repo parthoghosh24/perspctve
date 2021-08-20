@@ -11,16 +11,17 @@ import Title from './post/Title'
 import ReOpinion from './post/ReOpinion'
  
 const Post = (props) => {
+
   return (
     <div className="bg-white lg:rounded-lg  max-w-full md:max-w-3xl lg:mt-10">
       <Title title={props.post.title}/>
-      <Media media={props.post.media}/>
-      <Author author = {props.post.user} timeAgo = {props.post.time_ago}/>
+      {props.post.media && <Media media={props.post.media}/>}
+      <Author author = {props.post.user} timeAgo = {props.post.time_ago} isAnonymous = {props.post.is_anonymous}/>
       {(props.post.in_support_of || props.post.in_oppostion_to) && <ReOpinion inSupportOf = {props.post.in_support_of} inOppositionTo = {props.post.in_oppostion_to}/>}
       <Content content = {props.post.body}/>
       <Tags tags = {props.post.tags}/>
-      <Spread/>
-      <CallToAction/>
+      <Spread stats={props.post.stats}/>
+      <CallToAction uuid = {props.post.uuid} current_user_reactions={props.current_user_reactions}/>
     </div>
   )
 }

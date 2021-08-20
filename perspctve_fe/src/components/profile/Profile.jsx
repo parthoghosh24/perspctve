@@ -10,6 +10,7 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
   const {user, setUser} = useContext(UserContext);
+  const [postReactions, setPostReactions] = useState([]);
 
   const [posts, setPosts] = useState([]);
 
@@ -18,27 +19,29 @@ const Profile = () => {
     setIsLoading(loading);
     if(loading)
     {
-      fetchOpinionsForUser(user.username).then((response)=>{        
-        let modifiedPosts = posts;
-        modifiedPosts = response.data
-        setPosts(modifiedPosts);
-        setIsLoading(false);
-        if(modifiedPosts.length > 0)
-        {
-          setIsEmpty(false);
-        }
-        
-      }).catch((error)=>{
+        fetchOpinionsForUser(user.username).then((response)=>{
+          let modifiedPosts = posts;
+          modifiedPosts = response.data.opinions;
+          setPosts(modifiedPosts);
+          let modifiedPostReactions = postReactions;
+          modifiedPostReactions = response.data.current_user_reactions;
+          setPostReactions(modifiedPostReactions);
           setIsLoading(false);
-          setIsEmpty(true);
-      });
+          setIsEmpty(false); 
+        }).catch((error)=>{
+            setIsLoading(false);
+            setIsEmpty(true);
+        });
     }
   },[]);
 
   return (
     <div className="flex w-full justify-center items-center mt-10">
       <ul>
-        <li><ProfileIntro/></li>
+        <li><ProfileIntro userProfile ={{name:`${localStorage.getItem('first_name')} ${localStorage.getItem('last_name')}`, 
+                                         avatar: localStorage.getItem('avatar'), 
+                                         opinions: localStorage.getItem('opinions'), 
+                                         total_agreeing: localStorage.getItem('total_agreeing')}}/></li>
         <>
           {isLoading && <PostsSkeleton/>}
           {!isLoading && !isEmpty &&
@@ -46,7 +49,7 @@ const Profile = () => {
               <>
                 {          
                   posts.map((post, index)=>(
-                    <li><Post post={post}/></li>
+                    <li><Post post={post} current_user_reactions={postReactions}/></li>
                   ))
                 }
               </>

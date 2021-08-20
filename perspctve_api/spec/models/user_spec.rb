@@ -7,6 +7,7 @@
 #  email      :string
 #  first_name :string
 #  last_name  :string
+#  stats      :jsonb
 #  username   :string
 #  uuid       :string
 #  created_at :datetime         not null

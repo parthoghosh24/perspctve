@@ -3,8 +3,11 @@ class Api::V1::OpinionsController < ApplicationController
   skip_before_action :current_user, only: %i[index show]
 
   def index
-    opinions = OpinionBlueprint.render(Opinion.all)
-    render json: opinions, status: :ok
+    opinions = Opinion.published
+    current_user_reactions = @user ? Reaction.where(user: @user, opinion: opinions) : Reaction.where(fingerprint: @fingerprint, opinion: opinions)
+    opinions_hash = OpinionBlueprint.render_as_hash(opinions)
+    reactions_hash = ReactionBlueprint.render_as_hash(current_user_reactions)
+    render json: { opinions: opinions_hash, current_user_reactions: reactions_hash }, status: :ok
   end
 
   def create

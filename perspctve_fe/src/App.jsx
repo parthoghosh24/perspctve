@@ -12,12 +12,13 @@ import UserContext from './components/contexts/UserContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import ErrorContext from './components/contexts/ErrorContext';
+import { fingerPrint } from './fingerprintjs/index';
 
 const App = ()=> {
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState({});
 
-  const initialUserState = localStorage.length >0 ? {
+  const initialUserState = localStorage.length >0 && localStorage.getItem('first_name') ? {
       
       first_name: localStorage.getItem('first_name'),
       last_name: localStorage.getItem('last_name'),
@@ -26,7 +27,8 @@ const App = ()=> {
   } : {}
 
   const [user, setUser] = useState(initialUserState);
-  let userLength = Object.keys(user).length
+  let userLength = Object.keys(user).length;
+
 
   const toggle = ()=>{
     setIsOpen(!isOpen);
@@ -36,8 +38,13 @@ const App = ()=> {
     setError({});
   }
 
+  fingerPrint
+        .then(fp => fp.get())
+        .then(result =>{
+          localStorage.setItem('fingerprint', result.visitorId);
+        });
+
   const errorOccured = Object.keys(error).length; 
-  console.log(error)
 
   return (
     <ErrorContext.Provider value = {{error, setError}}>
@@ -51,13 +58,13 @@ const App = ()=> {
             <Route path="/profile" exact>
               {userLength === 0 ? <Redirect to ='/'/> : <Profile/>}
             </Route>
-            <Route path="/opinions/new" exact>
+            <Route path="/opinions/new">
               {userLength === 0 ? <Redirect to ='/'/> : <PostNew/>}
             </Route>
+            <Route path="/opinions/:uuid" component={Post}/>
             <Route path="/explore" exact component={Explore} />
             <Route path="/about" exact component={About} />
-            <Route path="/opinions/:uuid" children={Post} />
-            <Route path="/:uuid" children = {Profile}/>
+            <Route path="/:uuid" component = {Profile}/>
             
             
           </Switch>

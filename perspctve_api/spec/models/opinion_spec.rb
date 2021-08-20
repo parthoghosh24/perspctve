@@ -9,6 +9,7 @@
 #  is_anonymous    :boolean
 #  media           :jsonb
 #  mode            :enum
+#  stats           :jsonb
 #  title           :string
 #  uuid            :string
 #  created_at      :datetime         not null

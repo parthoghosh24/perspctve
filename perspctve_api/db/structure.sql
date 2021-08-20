@@ -93,11 +93,14 @@ CREATE TABLE public.opinions (
     user_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
+    in_support_id integer,
+    oppose_to_id integer,
     uuid character varying,
     is_anonymous boolean,
     mode public.mode_types,
     in_support_of character varying,
-    in_oppostion_to character varying
+    in_oppostion_to character varying,
+    stats jsonb DEFAULT '{"verdict": "neutral", "agree_perc": 0, "neutral_perc": 0, "disagree_perc": 0, "strongly_agree_perc": 0, "strongly_disagree_perc": 0}'::jsonb
 );
 
 
@@ -126,13 +129,13 @@ ALTER SEQUENCE public.opinions_id_seq OWNED BY public.opinions.id;
 
 CREATE TABLE public.reactions (
     id bigint NOT NULL,
-    user_id bigint NOT NULL,
+    user_id bigint,
     uuid character varying,
     fingerprint character varying,
-    opinion_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    reaction_type public.reaction_types
+    reaction_type public.reaction_types,
+    opinion_uuid character varying NOT NULL
 );
 
 
@@ -208,7 +211,8 @@ CREATE TABLE public.users (
     avatar character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    uuid character varying
+    uuid character varying,
+    stats jsonb DEFAULT '{"opinions": 0, "agree_total": 0}'::jsonb
 );
 
 
@@ -344,6 +348,13 @@ CREATE INDEX index_opinions_on_in_oppostion_to ON public.opinions USING btree (i
 
 
 --
+-- Name: index_opinions_on_in_support_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_opinions_on_in_support_id ON public.opinions USING btree (in_support_id);
+
+
+--
 -- Name: index_opinions_on_in_support_of; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -365,6 +376,13 @@ CREATE INDEX index_opinions_on_mode ON public.opinions USING btree (mode);
 
 
 --
+-- Name: index_opinions_on_oppose_to_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_opinions_on_oppose_to_id ON public.opinions USING btree (oppose_to_id);
+
+
+--
 -- Name: index_opinions_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -379,10 +397,10 @@ CREATE INDEX index_opinions_on_uuid ON public.opinions USING btree (uuid);
 
 
 --
--- Name: index_reactions_on_opinion_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_reactions_on_opinion_uuid; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_reactions_on_opinion_id ON public.reactions USING btree (opinion_id);
+CREATE INDEX index_reactions_on_opinion_uuid ON public.reactions USING btree (opinion_uuid);
 
 
 --
@@ -436,14 +454,6 @@ ALTER TABLE ONLY public.opinions
 
 
 --
--- Name: reactions fk_rails_37bfb81af0; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.reactions
-    ADD CONSTRAINT fk_rails_37bfb81af0 FOREIGN KEY (opinion_id) REFERENCES public.opinions(id);
-
-
---
 -- Name: opinion_tags fk_rails_3a16286c96; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -485,6 +495,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210808053001'),
 ('20210809034731'),
 ('20210809151603'),
-('20210810183006');
+('20210810183006'),
+('20210813131042'),
+('20210813131707'),
+('20210816133249'),
+('20210816134630'),
+('20210816134848');
 
 
