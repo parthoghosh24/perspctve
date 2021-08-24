@@ -53,19 +53,19 @@ const App = ()=> {
       <UserContext.Provider value ={{user, setUser}}>
         <div className="relative min-h-screen flex font-serif">
           <Helmet>
-                <meta charSet="utf-8" />
-                <title>Perspectve - An opinion based social network</title>
-                <link rel="canonical" href={`${process.env.REACT_APP_DOMAIN}`} />
-                <meta name="description"
-                  content="Perspctve is an opinion based social network which enables users to share their opinions without getting trolled."
-                />
-                 <meta property="og:title" content="Perspectve - An opinion based social network" />
-                 <meta property="og:image" content={'/images/perspctve.png'} />
-                 <meta property="og:url" content={`${process.env.REACT_APP_DOMAIN}`} />
-                 <meta property="og:description" content='Perspctve is an opinion based social network which enables users to share their opinions without getting trolled.' />
-                 <meta property="twitter:title" content="Perspectve - An opinion based social network"/>
-                 <meta property="twitter:card" content={`${process.env.REACT_APP_DOMAIN}/images/perspctve.png`}/>
-                 <meta property="twitter:description" content='Perspctve is an opinion based social network which enables users to share their opinions without getting trolled.' />
+              <meta charSet="utf-8" />
+              <title>Perspctve - An opinion based social network</title>
+              <link rel="canonical" href={`${process.env.REACT_APP_DOMAIN}`} />
+              <meta name="description"
+                content="Perspctve is an opinion based social network which enables users to share their opinions without getting trolled."
+              />
+                <meta property="og:title" content="Perspectve - An opinion based social network" />
+                <meta property="og:image" content={'/images/perspctve.png'} />
+                <meta property="og:url" content={`${process.env.REACT_APP_DOMAIN}`} />
+                <meta property="og:description" content='Perspctve is an opinion based social network which enables users to share their opinions without getting trolled.' />
+                <meta property="twitter:title" content="Perspectve - An opinion based social network"/>
+                <meta property="twitter:card" content={`${process.env.REACT_APP_DOMAIN}/images/perspctve.png`}/>
+                <meta property="twitter:description" content='Perspctve is an opinion based social network which enables users to share their opinions without getting trolled.' />
           </Helmet>
           <Navbar toggle={toggle} isOpen = {isOpen}/>
             <Switch>

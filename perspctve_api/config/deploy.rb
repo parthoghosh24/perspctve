@@ -1,13 +1,16 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.16.0"
 
-server 'server', port: 3001, roles: [:web, :app, :db], primary: true
+server '165.232.135.196', roles: [:web, :app, :db], primary: true
 
+set :rbenv_ruby, '2.7.3'
+set :bundle_config, { deployment: false }
 set :scm,           :git
 set :branch,        :main
 set :application, 'perspctve'
 set :user,        'deployer'
 set :repo_url, 'git@github.com:parthoghosh24/perspctve.git'
+set :repo_tree, '/perspctve_api'
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
 
