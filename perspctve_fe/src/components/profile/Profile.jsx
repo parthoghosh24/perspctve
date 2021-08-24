@@ -1,15 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useParams } from 'react-router';
 import { fetchOpinionsForUser } from '../../apis/opinionService';
 import Empty from '../common/Empty';
 import UserContext from '../contexts/UserContext';
 import Post from '../posts/Post';
 import PostsSkeleton from '../skeletons/PostsSkeleton';
 import ProfileIntro from './ProfileIntro'
+import {Helmet} from 'react-helmet';
 
 const Profile = () => {
+  const { username } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
   const {user, setUser} = useContext(UserContext);
+  
   const [postReactions, setPostReactions] = useState([]);
 
   const [posts, setPosts] = useState([]);
@@ -19,10 +23,11 @@ const Profile = () => {
     setIsLoading(loading);
     if(loading)
     {
-        fetchOpinionsForUser(user.username).then((response)=>{
+        fetchOpinionsForUser(username ? username : user.username).then((response)=>{
           let modifiedPosts = posts;
           modifiedPosts = response.data.opinions;
           setPosts(modifiedPosts);
+          setUser(response.data.user);
           let modifiedPostReactions = postReactions;
           modifiedPostReactions = response.data.current_user_reactions;
           setPostReactions(modifiedPostReactions);
@@ -37,19 +42,20 @@ const Profile = () => {
 
   return (
     <div className="flex w-full justify-center items-center mt-10">
+        <Helmet>
+                <meta charSet="utf-8" />
+                <link rel="no-follow" href={`${process.env.REACT_APP_DOMAIN}/profile`} />
+        </Helmet>
       <ul>
-        <li><ProfileIntro userProfile ={{name:`${localStorage.getItem('first_name')} ${localStorage.getItem('last_name')}`, 
-                                         avatar: localStorage.getItem('avatar'), 
-                                         opinions: localStorage.getItem('opinions'), 
-                                         total_agreeing: localStorage.getItem('total_agreeing')}}/></li>
         <>
           {isLoading && <PostsSkeleton/>}
           {!isLoading && !isEmpty &&
             
               <>
+              <li key={user.username}><ProfileIntro key={user.username} user={user}/></li>
                 {          
                   posts.map((post, index)=>(
-                    <li><Post post={post} current_user_reactions={postReactions}/></li>
+                    <li key={post.uuid}><Post key={post.uuid} post={post} current_user_reactions={postReactions}/></li>
                   ))
                 }
               </>

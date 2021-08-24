@@ -28,16 +28,12 @@ const Hero = () => {
       localStorage.setItem('first_name', resp.data.first_name)
       localStorage.setItem('last_name', resp.data.last_name)
       localStorage.setItem('avatar', resp.data.avatar)
-      localStorage.setItem('opinions', resp.data.stats.opinions)
-      localStorage.setItem('total_agreeing', resp.data.stats.agree_total)
 
       // set context
       localUser.first_name = resp.data.first_name
       localUser.last_name = resp.data.last_name
       localUser.username = resp.data.username
       localUser.avatar = resp.data.avatar
-      localUser.opinions = resp.data.stats.opinions
-      localUser.total_agreeing = resp.data.stats.agree_total
       setUser(localUser)
       // redirect to profile page
       history.replace("/profile")

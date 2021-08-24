@@ -99,7 +99,7 @@ CREATE TABLE public.opinions (
     is_anonymous boolean,
     mode public.mode_types,
     in_support_of character varying,
-    in_oppostion_to character varying,
+    in_opposition_to character varying,
     stats jsonb DEFAULT '{"verdict": "neutral", "agree_perc": 0, "neutral_perc": 0, "disagree_perc": 0, "strongly_agree_perc": 0, "strongly_disagree_perc": 0}'::jsonb
 );
 
@@ -341,10 +341,10 @@ CREATE INDEX index_opinion_tags_on_tag_id ON public.opinion_tags USING btree (ta
 
 
 --
--- Name: index_opinions_on_in_oppostion_to; Type: INDEX; Schema: public; Owner: -
+-- Name: index_opinions_on_in_opposition_to; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_opinions_on_in_oppostion_to ON public.opinions USING btree (in_oppostion_to);
+CREATE INDEX index_opinions_on_in_opposition_to ON public.opinions USING btree (in_opposition_to);
 
 
 --
@@ -500,6 +500,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210813131707'),
 ('20210816133249'),
 ('20210816134630'),
-('20210816134848');
+('20210816134848'),
+('20210820154832');
 
 

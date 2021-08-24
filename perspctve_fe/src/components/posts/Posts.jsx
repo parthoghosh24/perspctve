@@ -3,6 +3,7 @@ import Empty from '../common/Empty';
 import Post from './Post';
 import { fetchOpinions } from '../../apis/opinionService';
 import PostsSkeleton from '../skeletons/PostsSkeleton';
+import {Helmet} from 'react-helmet';
 
 const Posts = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,16 +30,33 @@ const Posts = () => {
             setIsEmpty(true);
         });
     }
-  },[]);
+  },[posts]);
 
   return (
     <div className="flex w-full justify-center items-center mt-10 md:mb-10">
+        <Helmet>
+                <meta charSet="utf-8" />
+                <title>Perspctve | Explore trending opinions</title>
+                <link rel="canonical" href={`${process.env.REACT_APP_DOMAIN}`} />
+                <meta name="description"
+                  content='explore the trending opinions'
+                />
+                 <meta property="og:title" content='Perspctve | Explore trending opinions'/>
+                 <meta property="og:image" content={'/images/perspctve.png'} />
+                 <meta property="og:url" content={`${process.env.REACT_APP_DOMAIN}/explore`} />
+                 <meta property="og:description" content='explore the trending opinions' />
+
+                 <meta property="twitter:title" content='Perspctve | Explore trending opinions'/>
+                 <meta property="twitter:card" content={`${process.env.REACT_APP_DOMAIN}/images/perspctve.png`}/>
+                 <meta property="twitter:description" content='explore the trending opinions' />
+
+        </Helmet>
         {isLoading && <PostsSkeleton/>}
         {!isLoading && !isEmpty &&
             <ul>
               {          
                 posts.map((post, _index)=>(
-                  <li key={post.uuid}><Post post={post} current_user_reactions={postReactions}/></li>
+                  <li key={post.uuid}><Post key={post.uuid} post={post} current_user_reactions={postReactions}/></li>
                 ))
               }
             </ul>   

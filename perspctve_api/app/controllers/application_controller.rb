@@ -20,7 +20,6 @@ class ApplicationController < ActionController::API
   end
 
   def fetch_fingerprint
-    puts "request.headers['MARKER'] #{request.headers['MARKER']}"
     @fingerprint = request.headers['HTTP_MARKER'] if request.headers['HTTP_MARKER']
   end
 

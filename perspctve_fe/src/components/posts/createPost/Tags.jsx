@@ -69,7 +69,7 @@ const Tags = () => {
     tags = {tags}
     suggestions = {suggestions}
     onDelete = {onDelete}
-    placeholderText="Add relevant tags for your opinion"
+    placeholderText="Add relevant tags for your opinion. Don't add #...  (Required)"
     onAddition ={onAddition}
     allowNew = {true}
     allowBackspace = {true}

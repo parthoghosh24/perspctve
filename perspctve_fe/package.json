@@ -24,10 +24,12 @@
     "react-dom": "^17.0.2",
     "react-floating-action-button": "^1.0.5",
     "react-google-login": "^5.0.0",
+    "react-helmet": "^6.1.0",
     "react-loading-skeleton": "^2.2.0",
     "react-markdown": "^6.0.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-share": "^4.4.0",
     "react-tag-autocomplete": "^6.2.0",
     "rich-markdown-editor": "^11.15.0",
     "styled-components": "^5.3.0",
@@ -35,8 +37,8 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
+    "start": "REACT_APP_DOMAIN=http://localhost:3000 REACT_APP_API_DOMAIN=http://localhost:3001 craco start",
+    "build": "REACT_APP_DOMAIN=https://perspctve.com REACT_APP_API_DOMAIN=https://api.perspctve.com craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },

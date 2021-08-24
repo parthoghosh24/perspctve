@@ -1,12 +1,9 @@
-import React from 'react'
-import Post from '../components/posts/Post'
+import SinglePost from "../components/posts/SinglePost"
 
 const post = () => {
   return (
-    <div className="flex w-full justify-center items-center mt-10 mb-10">
-      <Post/>
-    </div>
+   <SinglePost key={Date.now()}/> 
   )
 }
 
-export default post;
+export default post

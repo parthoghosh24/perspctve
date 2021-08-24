@@ -15,4 +15,8 @@ const fetchOpinionsForUser = async (username) =>{
   return await get(opinionsUrlForUser);
 }
 
-export { createOpinion, fetchOpinions, fetchOpinionsForUser };
+const fetchOpinion = async (uuid) =>{
+  return await get(`${opinionsUrl}/${uuid}`);
+}
+
+export { createOpinion, fetchOpinions, fetchOpinionsForUser, fetchOpinion };

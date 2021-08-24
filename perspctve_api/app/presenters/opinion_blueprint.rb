@@ -7,6 +7,6 @@ class OpinionBlueprint < Blueprinter::Base
   field :stats
   association :tags, blueprint: TagBlueprint
   association :user, if: ->(_field_name, opinion, _options) { !opinion.is_anonymous }, blueprint: UserBlueprint
-  association :in_oppostion_to, if: ->(_field_name, opinion, _options) { opinion.in_oppostion_to.present? }, blueprint: OpinionBlueprint
-  association :in_support_of, if: ->(_field_name, opinion, _options) { opinion.in_support_of.present? }, blueprint: OpinionBlueprint
+  association :in_opposition, if: ->(_field_name, opinion, _options) { opinion.in_opposition_to.present? }, blueprint: OpinionBlueprint
+  association :in_support, if: ->(_field_name, opinion, _options) { opinion.in_support_of.present? }, blueprint: OpinionBlueprint
 end

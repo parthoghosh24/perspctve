@@ -9,22 +9,37 @@ import { faPenNib,
          faMehBlank, 
          faHandshake,
          faFistRaised,
-         faFlag} from '@fortawesome/free-solid-svg-icons'
+         faShare} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { createPopper } from '@popperjs/core'
 import { createReactions, deleteReactions } from '../../../apis/reactionService'
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  EmailShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  WhatsappIcon,
+  LinkedinIcon,
+  EmailIcon
+} from 'react-share'
 
 const CallToAction = (props) => {
   const [isReOpinionOpen, setIsReOpinionOpen] = useState(false);
-
-
   const [isReportOpen, setIsReportOpen] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   const reOpinionBtnRef = createRef();
   const reOpinionPopoverRef = createRef();
 
   const reportBtnRef = createRef();
   const reportPopoverRef = createRef();
+
+  const shareBtnRef = createRef();
+  const sharePopoverRef = createRef();
+  const shareUrl = `${process.env.REACT_APP_DOMAIN}/opinions/${props.uuid}`;
 
   const [stronglyAgreePressed, setStronglyAgreePressed] = useState(props.current_user_reactions && props.current_user_reactions.find(el => el.reaction_type === 'strongly_agree' && el.opinion_uuid === props.uuid) ? true: false);
   const [agreePressed, setAgreePressed] = useState(props.current_user_reactions && props.current_user_reactions.find(el => el.reaction_type === 'agree' && el.opinion_uuid === props.uuid) ? true: false);
@@ -53,6 +68,17 @@ const CallToAction = (props) => {
 
   const closeReportPopOver = () => {
     setIsReportOpen(false);
+  }
+
+  const openSharePopOver = () => {
+    createPopper(shareBtnRef.current, sharePopoverRef.current,{
+      placement: 'bottom'
+    });
+    setIsShareOpen(true);
+  }
+
+  const closeSharePopOver = () => {
+    setIsShareOpen(false);
   }
 
   const createOrDeleteReaction = (reaction_type, reaction_state) => {
@@ -151,13 +177,41 @@ const CallToAction = (props) => {
           </button>
           <div className={isReOpinionOpen ? "p-0": "hidden"} ref={reOpinionPopoverRef}>
               <div className="flex flex-wrap bg-white border-gray-800 border-4 rounded">
-                  <Link to={`/opinions/new?re=in_support&uuid=${props.uuid}`} className="p-2 w-full text-black lg:text-1xl hover:bg-blue-800 hover:text-white">
-                    <FontAwesomeIcon icon={faHandshake}/> in support
+                  <Link to={`/opinions/new?re=in_support_of&uuid=${props.uuid}`} className="p-2 w-full text-black lg:text-1xl hover:bg-blue-800 hover:text-white">
+                    <FontAwesomeIcon icon={faHandshake}/> in support of
                   </Link>
                   <br/>
-                  <Link to="/opinions/new?re=in_opposition&uuid=${props.uuid}" className="p-2 w-full text-black lg:text-1xl hover:bg-blue-800 hover:text-white">
+                  <Link to={`/opinions/new?re=in_opposition_to&uuid=${props.uuid}`} className="p-2 w-full text-black lg:text-1xl hover:bg-blue-800 hover:text-white">
                     <FontAwesomeIcon icon={faFistRaised}/> in opposition to
                   </Link>
+              </div>
+          </div>
+          <button className="p-1 sm:p-3 text-black lg:text-2xl text-blue-800 hover:text-blue-600" onClick={()=>{
+            isShareOpen ? closeSharePopOver() : openSharePopOver();
+          }} ref={shareBtnRef}>
+            <FontAwesomeIcon icon={faShare}/>
+          </button>
+          <div className={isShareOpen ? "p-0": "hidden"} ref={sharePopoverRef}>
+              <div className="flex flex-wrap bg-white border-gray-800 border-4 rounded p-5">
+                  <FacebookShareButton url={shareUrl}>
+                    <FacebookIcon size={32} round />
+                  </FacebookShareButton>
+                  
+                  <TwitterShareButton url={shareUrl} className="ml-1">
+                    <TwitterIcon size={32} round />
+                  </TwitterShareButton>
+
+                  <WhatsappShareButton url={shareUrl} className="ml-1">
+                    <WhatsappIcon size={32} round />
+                  </WhatsappShareButton>
+
+                  <LinkedinShareButton url={shareUrl} className="ml-1">
+                    <LinkedinIcon size={32} round />
+                  </LinkedinShareButton>
+
+                  <EmailShareButton url={shareUrl} className="ml-1">
+                    <EmailIcon size={32} round/>
+                  </EmailShareButton>
               </div>
           </div>
           <button className="p-3 ml-1 text-black lg:text-2xl text-blue-800 hover:text-blue-600" onClick={()=>{

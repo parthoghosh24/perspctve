@@ -14,10 +14,10 @@ const Post = (props) => {
 
   return (
     <div className="bg-white lg:rounded-lg  max-w-full md:max-w-3xl lg:mt-10">
-      <Title title={props.post.title}/>
+      <Title title={props.post.title} uuid = {props.post.uuid}/>
       {props.post.media && <Media media={props.post.media}/>}
       <Author author = {props.post.user} timeAgo = {props.post.time_ago} isAnonymous = {props.post.is_anonymous}/>
-      {(props.post.in_support_of || props.post.in_oppostion_to) && <ReOpinion inSupportOf = {props.post.in_support_of} inOppositionTo = {props.post.in_oppostion_to}/>}
+      {(props.post.in_support || props.post.in_opposition) && <ReOpinion inSupportOf = {props.post.in_support} inOppositionTo = {props.post.in_opposition}/>}
       <Content content = {props.post.body}/>
       <Tags tags = {props.post.tags}/>
       <Spread stats={props.post.stats}/>
