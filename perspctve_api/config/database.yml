@@ -84,3 +84,6 @@ production:
   database: perspctve_api_production
   username: perspctve_api
   password: <%= ENV['PERSPCTVE_API_DATABASE_PASSWORD'] %>
+  host: private-db-postgresql-sfo2-19995-do-user-9502784-0.b.db.ondigitalocean.com
+  port: 25060
+  sslmode: require
