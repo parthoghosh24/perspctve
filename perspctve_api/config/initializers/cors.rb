@@ -7,7 +7,8 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins '*'
+    # TODO this needs to be refactored
+    origins Rails.env.development? ? '*' : ['https://perspctve.com', 'https://www.perspctve.com']
 
     resource '*',
       headers: :any,
