@@ -1,8 +1,6 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.16.0"
-
-ask(:password, nil, echo: false)
-server '165.232.135.196', roles: [:app], primary: true, password: fetch(:password)
+server '165.232.135.196', roles: [:app], primary: true
 
 set :rbenv_ruby, '2.7.3'
 set :bundle_config, { deployment: false }
