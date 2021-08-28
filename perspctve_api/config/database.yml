@@ -83,7 +83,7 @@ production:
   <<: *default
   database: perspctve_api_production
   username: deployer
-  password: <%= ENV['PERSPCTVE_API_DATABASE_PASSWORD'] %>
+  password: u4gal4gvj6b2nlho
   host: perspctve-prod-do-user-9502784-0.b.db.ondigitalocean.com
   port: 25060
   sslmode: require
