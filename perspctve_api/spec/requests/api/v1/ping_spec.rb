@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe "Pings", type: :request do
+RSpec.describe "Api::V1::Pings", type: :request do
   describe "GET /index" do
     it "returns http success" do
-      get "/ping/index"
+      get "/api/v1/ping"
       expect(response).to have_http_status(:success)
     end
   end
