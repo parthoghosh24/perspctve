@@ -51,11 +51,11 @@ const Profile = () => {
         </Helmet>
       <ul>
         <>
+          <li key={user.username}><ProfileIntro key={user.username} user={user}/></li>
           {isLoading && <PostsSkeleton/>}
           {!isLoading && !isEmpty &&
             
               <>
-              <li key={user.username}><ProfileIntro key={user.username} user={user}/></li>
                 {          
                   posts.map((post, index)=>(
                     <li key={post.uuid}><Post key={post.uuid} post={post} current_user_reactions={postReactions}/></li>
