@@ -24,7 +24,10 @@ const Posts = () => {
             modifiedPostReactions = response.data.current_user_reactions;
             setPostReactions(modifiedPostReactions);
             setIsLoading(false);
-            setIsEmpty(false); 
+            if(modifiedPosts.length > 0)
+            {
+              setIsEmpty(false);
+            }    
         }).catch((error)=>{
             setIsLoading(false);
             setIsEmpty(true);
