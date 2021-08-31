@@ -18,6 +18,7 @@ const destroy = (url, options={})=>{
 }
 
 const request = async (url, method, options)=>{
+  console.log(`baseUrl ${baseUrl}`);
   let requestPayload = {url: url, method: method, baseURL: baseUrl, headers: {"Content-Type":"application/json"}};
   const token = localStorage.getItem('token');
   if(token !== null)
