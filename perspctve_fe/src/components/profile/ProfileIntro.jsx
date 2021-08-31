@@ -26,9 +26,16 @@ const ProfileIntro = (props) => {
           <div className="p-3 ml-1 w-10 h-10 sm:w-12 sm:h-12 text-blue-800">
             <FontAwesomeIcon icon={faPenNib}/>
           </div>
-          <div className="text-blue-800 ml-2">
-            {props.user.stats.opinions >=1000 ? `${props.user.stats.opinions/1000.0}k` : `${props.user.stats.opinions}`}
-          </div>
+          {
+            props.user && props.user.stats ?
+            <div className="text-blue-800 ml-2">
+              {props.user.stats.opinions >=1000 ? `${props.user.stats.opinions/1000.0}k` : `${props.user.stats.opinions}`}
+            </div>
+            :
+            <div className="text-blue-800 ml-2">
+              0
+            </div>
+          }
         </div>
         <div className="text-xl lg:text-2xl">
           <div>
@@ -39,9 +46,16 @@ const ProfileIntro = (props) => {
               <FontAwesomeIcon icon= {faThumbsUp}/>
             </div>
           </div>
-          <div className="text-blue-800 ml-4">
-            {props.user.stats.agree_total >=1000 ? `${props.user.stats.agree_total/1000.0}k` : `${props.user.stats.agree_total}`}
-          </div>
+          {
+            props.user && props.user.stats ?
+            <div className="text-blue-800 ml-4">
+              {props.user.stats.agree_total >=1000 ? `${props.user.stats.agree_total/1000.0}k` : `${props.user.stats.agree_total}`}
+            </div>
+            :
+            <div className="text-blue-800 ml-4">
+              0
+            </div>
+          }
         </div>
       </div>
     </div>
