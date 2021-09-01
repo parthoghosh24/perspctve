@@ -61,5 +61,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "localstorage-polyfill": "^1.0.1"
+  }
 }
