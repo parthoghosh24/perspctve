@@ -14,6 +14,13 @@ const ProfileIntro = (props) => {
               <span className="font-semibold text-2xl text-blue-800">Anonymous User</span>
             </>
             :
+            props.user.avatar === null ?
+            <>
+              <FontAwesomeIcon icon={faUserCircle} className="rounded-full ring-4 ml-14 text-7xl md:text-7xl text-blue-800"/>
+              <br/>
+              <span className="font-semibold text-2xl text-blue-800">{`${props.user.first_name} ${props.user.last_name}`}</span>
+            </>
+            :
             <>
               <img src={props.user.avatar} className="rounded-full w-20 ring-4 ml-10" alt="author"/>
               <span className="font-semibold text-2xl text-blue-800">{`${props.user.first_name} ${props.user.last_name}`}</span>
