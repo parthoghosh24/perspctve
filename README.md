@@ -21,4 +21,4 @@ Features
 Tech spec
 ----------
 * React + API app
-* Backend API in rails (Cause I am good at it)
+* Backend API in rails
